@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Lucky Box - Mobile Legends</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: url('https://images.alphacoders.com/102/thumb-1920-1027320.jpg') no-repeat center center fixed;
+      background-size: cover;
+      color: Yellow;
+      text-align: center;
+      padding-top: 80px;
+    }
+
+    .container {
+      background: rgba(0, 0, 0, 0.9);
+      padding: 30px;
+      border-radius: 15px;
+      display: inline-block;
+    }
+
+    input, button {
+      padding: 10px;
+      margin: 10px;
+      border-radius: 5px;
+      border: none;
+      font-size: 16px;
+    }
+
+    button {
+      background-color: gold;
+      cursor: pointer;
+    }
+
+    h2 {
+      margin-bottom: 20px;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="loginBox">
+  <h2>🎮 Lucky Box Mobile Legends 🎮</h2>
+  <input type="text" id="userId" placeholder="User ID"><br>
+  <input type="password" id="password" placeholder="Password"><br>
+  <button onclick="login()">Login</button>
+  <p id="loginStatus"></p>
+</div>
+
+<div class="container" id="gameBox" style="display: none;">
+  <h2>Selamat datang, <span id="currentUser"></span>!</h2>
+  <p>Kredit Anda: <span id="credit">1</span></p>
+  <button onclick="play()">🎁 Buka Lucky Box</button>
+  <h3 id="result"></h3>
+</div>
+
+<script>
+  const users = [
+    { userId: "abx125", password: "melelh", credit: 1 },
+{ userId: "abx125", password: "melelh", credit: 1 },
+    { userId: "afcv", password: "svs254", credit: 1 },
+{ userId: "afcd", password: "svs25s", credit: 1 },
+{ userId: "afcs", password: "svs25q", credit: 1 },
+{ userId: "afcq", password: "svs25w", credit: 1 },
+{ userId: "afch", password: "svs25k", credit: 1 },
+{ userId: "afcb", password: "svs25b", credit: 1 },
+{ userId: "afc7", password: "svs25s", credit: 1 },
+{ userId: "afcf", password: "svs25r", credit: 1 },
+{ userId: "afcp", password: "svs25p", credit: 1 },
+{ userId: "afcu", password: "svs25k", credit: 1 },
+{ userId: "afcy", password: "svs25b", credit: 1 },
+{ userId: "afcn", password: "svs25s", credit: 1 },
+{ userId: "afcm", password: "svs25q", credit: 1 },
+{ userId: "afcg", password: "svs25w", credit: 1 },
+{ userId: "afcqh", password: "svs25k", credit: 1 },
+{ userId: "afcdb", password: "svs25b", credit: 1 },
+{ userId: "afcb7", password: "svs25s", credit: 1 },
+{ userId: "afcdf", password: "svs25r", credit: 1 },
+{ userId: "afcvp", password: "svs25p", credit: 1 },
+{ userId: "afcgu", password: "svs25k", credit: 1 },
+{ userId: "afcvy", password: "svs25b", credit: 1 },
+{ userId: "afcd", password: "svs25s", credit: 1 },
+{ userId: "afcs", password: "svs25q", credit: 1 },
+{ userId: "afcq", password: "svs25w", credit: 1 },
+{ userId: "afch", password: "svs25k", credit: 1 },
+{ userId: "afcb", password: "svs25b", credit: 1 },
+{ userId: "afc7", password: "svs25s", credit: 1 },
+{ userId: "afcf", password: "svs25r", credit: 1 },
+{ userId: "afcp", password: "svs25p", credit: 1 },
+{ userId: "afcu", password: "svs25k", credit: 1 },
+{ userId: "afcy", password: "svs25b", credit: 1 },
+{ userId: "afcf", password: "svs25s", credit: 1 },
+{ userId: "afcdm", password: "svs25q", credit: 1 },
+{ userId: "afcbg", password: "svs25w", credit: 1 },
+{ userId: "afcqwh", password: "svs25k", credit: 1 },
+{ userId: "afcdqb", password: "svs25b", credit: 1 },
+{ userId: "afcbg7", password: "svs25s", credit: 1 },
+{ userId: "afcddf", password: "svs25r", credit: 1 },
+{ userId: "afcvep", password: "svs25p", credit: 1 },
+{ userId: "afcgvu", password: "svs25k", credit: 1 },
+{ userId: "afcvqy", password: "svs25ab", credit: 1 },
+{ userId: "afcad", password: "svs25s", credit: 1 },
+{ userId: "afqcs", password: "svs25q", credit: 1 },
+{ userId: "awfcq", password: "svs25w", credit: 1 },
+{ userId: "eafch", password: "svs25k", credit: 1 },
+{ userId: "afvcb", password: "svs25b", credit: 1 },
+{ userId: "aafc7", password: "svs25s", credit: 1 },
+{ userId: "aefcf", password: "svs25r", credit: 1 },
+{ userId: "agfcp", password: "svs25p", credit: 1 },
+{ userId: "aqfcu", password: "svs25k", credit: 1 },
+{ userId: "awfcy", password: "svs25b", credit: 1 },
+{ userId: "arfcn", password: "svs25s", credit: 1 },
+{ userId: "affcm", password: "svs25q", credit: 1 },
+{ userId: "afgcg", password: "svs25w", credit: 1 },
+{ userId: "afcgqh", password: "svs25k", credit: 1 },
+{ userId: "afcgdb", password: "svs25b", credit: 1 },
+{ userId: "afcgb7", password: "svs25s", credit: 1 },
+{ userId: "afcqdf", password: "svs25r", credit: 1 },
+{ userId: "af5cvp", password: "svs25p", credit: 1 },
+{ userId: "afc4gu", password: "svs25k", credit: 1 },
+{ userId: "afcv5y", password: "svs25b", credit: 1 },
+{ userId: "afc5d", password: "svs25s", credit: 1 },
+{ userId: "af4cs", password: "svs25q", credit: 1 },
+{ userId: "afc4q", password: "svs25w", credit: 1 },
+{ userId: "afch4", password: "svs25k", credit: 1 },
+{ userId: "afcqb", password: "svs25b", credit: 1 },
+{ userId: "afc7q", password: "svs25s", credit: 1 },
+{ userId: "afcqf", password: "svs25r", credit: 1 },
+{ userId: "afcqp", password: "svs25p", credit: 1 },
+{ userId: "afqcu", password: "svs25k", credit: 1 },
+{ userId: "afcqy", password: "svs25b", credit: 1 },
+{ userId: "afcf", password: "svs25s", credit: 1 },
+{ userId: "afcdqm", password: "svs25q", credit: 1 },
+{ userId: "afcbqg", password: "svs25w", credit: 1 },
+{ userId: "afqcqwh", password: "svs25k", credit: 1 },
+{ userId: "afqcdqb", password: "svs25b", credit: 1 },
+{ userId: "afqcbg7", password: "svs25s", credit: 1 },
+{ userId: "afcsddf", password: "svs25r", credit: 1 },
+{ userId: "afcvep", password: "svs25p", credit: 1 },
+{ userId: "afcdvgvu", password: "svs25k", credit: 1 },
+{ userId: "afcsvvqy", password: "svs25b", credit: 1 },
+{ userId: "afqcbg87", password: "svs25s", credit: 1 },
+{ userId: "afcsdd1f", password: "svs25r", credit: 1 },
+{ userId: "afcve2p", password: "svs25p", credit: 1 },
+{ userId: "afcdvgv3u", password: "svs25k", credit: 1 },
+{ userId: "afcsvvq5y", password: "svs25b", credit: 1 },
+{ userId: "afqcbqg7", password: "svs25s", credit: 1 },
+{ userId: "afcsdwdf", password: "svs25r", credit: 1 },
+{ userId: "afcve3p", password: "svs25p", credit: 1 },
+{ userId: "afcdvg5vu", password: "svs25k", credit: 1 },
+{ userId: "afcsv5vqy", password: "svs25b", credit: 1 },
+{ userId: "afcbaqg", password: "svs25w", credit: 1 },
+{ userId: "afqc5qwh", password: "svs25k", credit: 1 },
+{ userId: "af1qcdqb", password: "svs25b", credit: 1 },
+{ userId: "afq6cbg7", password: "svs25s", credit: 1 },
+{ userId: "dshhdh5", password: "svs25b", credit: 1 },
+{ userId: "dhrhe2", password: "svs25w", credit: 1 },
+{ userId: "brhff9", password: "svs25k", credit: 1 },
+{ userId: "fgbtb1", password: "svs25b", credit: 1 },
+{ userId: "rthds4", password: "svs25s", credit: 1 },
+{ userId: "ddsfe", password: "svs25b", credit: 1 },
+{ userId: "gjdt3", password: "svs25s", credit: 1 },
+{ userId: "dbb875", password: "svs25b", credit: 1 },
+{ userId: "dbfb457", password: "svs25w", credit: 1 },
+{ userId: "rhuf125", password: "svs25k", credit: 1 },
+{ userId: "kloi15", password: "svs25b", credit: 1 },
+{ userId: "uythj4", password: "svs25s", credit: 1 },
+
+
+
+
+
+
+
+
+
+
+     
+  ];
+
+  let currentUser = null;
+
+  function login() {
+    const enteredId = document.getElementById("userId").value;
+    const enteredPw = document.getElementById("password").value;
+
+    const user = users.find(u => u.userId === enteredId && u.password === enteredPw);
+
+    if (user) {
+      currentUser = user;
+      document.getElementById("loginBox").style.display = "none";
+      document.getElementById("gameBox").style.display = "block";
+      document.getElementById("currentUser").innerText = user.userId;
+      document.getElementById("credit").innerText = user.credit;
+    } else {
+      document.getElementById("loginStatus").innerText = "❌ User ID atau Password salah!";
+    }
+  }
+
+  function play() {
+    if (currentUser.credit <= 0) {
+      document.getElementById("result").innerText = "⚠️ Kredit Anda habis!";
+      return;
+    }
+
+    const hadiah = [
+      "💎 5 Diamond",
+      "💎 5 Diamond",
+      "💎 5 Diamond",
+      "💎 10 Diamond",
+      "💣 Zonk!",
+      "💎 5 Diamond",
+      "💣 Zonk Lagi!",
+      "💎 5 Diamond"
+    ];
+
+    const randomIndex = Math.floor(Math.random() * hadiah.length);
+    const result = hadiah[randomIndex];
+
+    currentUser.credit = 0;
+    document.getElementById("credit").innerText = currentUser.credit;
+    document.getElementById("result").innerText = `🎉 Anda mendapatkan: ${result}`;
+  }
+</script>
+
+</body>
+</html>
